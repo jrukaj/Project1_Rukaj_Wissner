@@ -1,0 +1,94 @@
+    /**
+     * Searches the BST for all of the data with the most recent date and prints it out
+     */
+    public void search() {
+        java.util.Iterator<State> iter = bst.iterator();
+        String date = recentDate();
+        
+        if (!iter.hasNext()) {
+            System.out.println("No available data");
+        }
+        
+        int i = 0;
+        State[] stateArr1 = new State[totalRecords];
+        while (iter.hasNext()) {
+            State state = iter.next();
+            if (state.getDate().equals(date)) {
+                stateArr1[i] = state;
+                i++;
+            }
+        }
+        
+        int counter = 0;
+        System.out.println("There are " + i + " records on " + changeDate(date));
+        System.out.println("state\tpositive\tnegative\thospitalized\tonVentilatorCurrently\tonVentilatorCumulative\t"
+            + "recovered\tdataQualityGrade\tdeath");
+        while (counter < i) {
+            System.out.println(stateArr1[counter].getState() + "\t" + changeNumbers(eliminateDecimal(stateArr1[counter].getPositives())) + "\t\t" +
+                changeNumbers(eliminateDecimal(stateArr1[counter].getNegatives())) + "\t\t" + changeNumbers(eliminateDecimal(stateArr1[counter].getHospitalized())) + "\t\t" + 
+                changeNumbers(eliminateDecimal(stateArr1[counter].getOnVentilCurr())) + "\t\t\t" + changeNumbers(eliminateDecimal(stateArr1[counter].getOnVentilCum())) + "\t\t\t" + 
+                changeNumbers(eliminateDecimal(stateArr1[counter].getRecovered())) + "\t\t" + stateArr1[counter].getGrade() + "\t\t\t" + 
+                changeNumbers(eliminateDecimal(stateArr1[counter].getDeath())));
+            counter++;
+        }
+    }
+    
+    /**
+     * Searches the BST for the data that matches the date parameter
+     * 
+     * @param str - the date thats beign compared to
+     */
+    public void search(String str) {
+        String date = str.substring(6) + str.substring(0,2) +  str.substring(3,5);
+        java.util.Iterator<State> iter = bst.iterator();
+        
+        
+        int i = 0;
+        State[] stateArr1 = new State[totalRecords];
+        while (iter.hasNext()) {
+            State state = iter.next();
+            if (state.getDate().equals(date)) {
+                stateArr1[i] = state;
+                i++;
+            }
+        }
+        
+        if (stateArr1[0] == null) {
+            System.out.println("There are no records on " + str);
+        }
+        else {
+            int counter = 0;
+            System.out.println("There are " + i + " records on " + changeDate(date));
+            System.out.println("state\tpositive\tnegative\thospitalized\tonVentilatorCurrently\tonVentilatorCumulative\t"
+                + "recovered\tdataQualityGrade\tdeath");
+            while (counter < i) {
+                System.out.println(stateArr1[counter].getState() + "\t" + changeNumbers(eliminateDecimal(stateArr1[counter].getPositives())) + "\t\t" +
+                    changeNumbers(eliminateDecimal(stateArr1[counter].getNegatives())) + "\t\t" + changeNumbers(eliminateDecimal(stateArr1[counter].getHospitalized())) + "\t\t" + 
+                    changeNumbers(eliminateDecimal(stateArr1[counter].getOnVentilCurr())) + "\t\t\t" + changeNumbers(eliminateDecimal(stateArr1[counter].getOnVentilCum())) + "\t\t\t" + 
+                    changeNumbers(eliminateDecimal(stateArr1[counter].getRecovered())) + "\t\t" + stateArr1[counter].getGrade() + "\t\t\t" + 
+                    changeNumbers(eliminateDecimal(stateArr1[counter].getDeath())));
+                counter++;
+            }
+        }       
+    }
+    
+    
+    /**
+     * Gets rid of the decimal in the strings of number
+     * ex. eliminateDecimal("100.0") --> "100"
+     * 
+     * @param str the string being changed
+     * @return the changed number without the decimal
+     */
+    private String eliminateDecimal(String str) {
+        if (!str.isEmpty()) {
+            String newStr = str.substring(0, str.length() - 2);
+            return newStr;
+        }
+        else {
+            return str;
+        }
+    }
+    
+    
+    
